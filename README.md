@@ -11,9 +11,9 @@ $('.js-tri').triangles();
 Markup
 ------
 
-<div class="trianglewrapper">
-    <canvas id="canvas0" class="triangles js-tri"/>
-</div>
+&lt;div class="trianglewrapper"&gt;
+    &lt;canvas id="canvas0" class="triangles js-tri"/&gt;
+&lt;/div&gt;
 
 The canvas element must have an id and it must be unique.
 
