@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" id="site" class="nojs">
+<head>
+    <title>Triangles</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="jquery.triangles.css"/>
+    <style>
+        .trianglewrapper { margin-bottom:10px; }
+        .trianglewrapper .bg {
+            display:block;
+            width:100%;
+        }
+        .trianglewrapper .triangles {
+            background:url('bg-triangle.png');
+        }        
+        .test1 { float:left; width:500px; }
+        .test2 { float:left; width:300px; }
+    </style>
+</head>
+
+<body>
+    <div class="trianglewrapper">
+        <img src="bg.jpg" alt="" class="bg"/>
+        <canvas id="canvas0" class="triangles js-tri"/>
+    </div>
+
+    <div class="trianglewrapper test1">
+        <img src="bg.jpg" alt="" class="bg"/>
+        <canvas id="canvas1" class="triangles js-tri2"/>
+    </div>
+
+    <div class="trianglewrapper test2">
+        <img src="bg.jpg" alt="" class="bg"/>
+        <canvas id="canvas2" class="triangles js-tri3"/>
+    </div>
+    
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="jquery.triangles.js"></script>
+
+    <script>
+        $(document).ready(function(){
+            $('.js-tri').triangles();
+
+            $('.js-tri2').triangles({
+                'triangleWidth': 14,
+                'triangleHeight': 14,
+                'colour': '255,180,0'
+            });
+            $('.js-tri3').triangles({
+                'triangleWidth': 14,
+                'triangleHeight': 14,
+                'colour': '85,155,90'
+            });
+        });
+    </script>
+</body>
+</html>
