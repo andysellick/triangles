@@ -237,7 +237,9 @@
             }               
 
             thisobj.triangles.general.initialise();
-            thisobj.triangles.mobile.addListeners();
+            if('ontouchstart' in document.documentElement){
+                thisobj.triangles.mobile.addListeners();
+            }
 
             $(window).on('resize',function(){
                 thisobj.triangles.general.initCanvasSize();
