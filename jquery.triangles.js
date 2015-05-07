@@ -48,8 +48,9 @@
                     initialise: function(){
                         thisobj.canvas = document.getElementById(thisobj.$elem.attr('id'));
                         thisobj.triangles.general.initCanvasSize();
-                        thisobj.triangles.general.initCanvas();
-                        thisobj.triangles.draw.drawLoop();
+                        if(thisobj.triangles.general.initCanvas()){
+                            thisobj.triangles.draw.drawLoop();
+                        }
                     },
                     initCanvasSize: function(){
                         //store offset position of this canvas
@@ -70,9 +71,10 @@
                     initCanvas: function(){
                         if(thisobj.canvas.getContext){
                             thisobj.cxt = thisobj.canvas.getContext('2d');
+                            return(1);
                         }
                         else {
-                            thisobj.canvas.html("Your browser does not support canvas. Sorry.");
+                            //thisobj.canvas.html("Your browser does not support canvas. Sorry.");
                         }
                     },
                     clearCanvas: function(){
@@ -254,7 +256,6 @@
                 thisobj.triangles.draw.callDraw(e);
             });
             $(thisobj.settings.surrogate).mousemove(function(e){
-                console.log('surrogate');
                 thisobj.triangles.draw.callDraw(e);
             });
             
