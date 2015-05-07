@@ -27,3 +27,4 @@ Options
 - triangleWidth: number, width of the outputted triangles.
 - triangleHeight: number, height of the outputted triangles. Both width and height default to 28 and do not scale. Note that width and height do not have to be equal.
 - colour: string representing an rgb colour value for the outputted triangles, defaults to blue, '38,60,73'
+- surrogate: classname of an element that is positioned on top of the canvas but should still allow interaction with the canvas. Should be in the form '.class'

@@ -16,23 +16,39 @@
         }        
         .test1 { float:left; width:500px; }
         .test2 { float:left; width:300px; }
+        
+        .surrogate {
+            position:absolute;
+            top:20%;
+            left:0;
+            width:100%;
+            padding:20px 0;
+            color:#FFFFFF;
+            font-size:200%;
+            font-weight:bold;
+            text-align:center;
+            font-family:Arial;
+        }
     </style>
 </head>
 
 <body>
     <div class="trianglewrapper">
         <img src="bg.jpg" alt="" class="bg"/>
-        <canvas id="canvas0" class="triangles js-tri"/>
+        <canvas id="canvas0" class="triangles js-tri"></canvas>
+        <div class="surrogate">
+            Demonstrating surrogate - an overlapping element that still allows interaction with the canvas behind
+        </div>
     </div>
 
     <div class="trianglewrapper test1">
         <img src="bg.jpg" alt="" class="bg"/>
-        <canvas id="canvas1" class="triangles js-tri2"/>
+        <canvas id="canvas1" class="triangles js-tri2"></canvas>
     </div>
 
     <div class="trianglewrapper test2">
         <img src="bg.jpg" alt="" class="bg"/>
-        <canvas id="canvas2" class="triangles js-tri3"/>
+        <canvas id="canvas2" class="triangles js-tri3"></canvas>
     </div>
     
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
@@ -40,7 +56,9 @@
 
     <script>
         $(document).ready(function(){
-            $('.js-tri').triangles();
+            $('.js-tri').triangles({
+                'surrogate':'.surrogate'
+            });
 
             $('.js-tri2').triangles({
                 'triangleWidth': 14,

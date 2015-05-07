@@ -1,6 +1,4 @@
 /*
-
-
     Usage: $('.js-tri').triangles();
 
     Markup:
@@ -15,7 +13,7 @@
 		triangleWidth: number, width of the outputted triangles.
 		triangleHeight: number, height of the outputted triangles. Both width and height default to 28 and do not scale. Note that width and height do not have to be equal.
 		colour: string representing an rgb colour value for the outputted triangles, defaults to blue, '38,60,73'
-
+		surrogate: classname of an element that is positioned on top of the canvas but should still allow interaction with the canvas. Should be in the form '.class'
 */
 (function (window,$) {
 	var Plugin = function(elem,options){
@@ -31,6 +29,7 @@
 				triangleWidth: 28,
 				triangleHeight: 28,
 				colour: '38,60,73',
+				surrogate: '',
 			}, this.defaults, this.options);
 
             this.canvas;
@@ -84,6 +83,12 @@
                     }
                 },
                 draw: {
+                    callDraw: function(e){
+                        //draw the triangle under the mouse
+                        thisobj.triangles.draw.createTriangles(e.pageX - thisobj.plusx,e.pageY - thisobj.plusy,1);
+                        //also draw a slightly random one beneath it
+                        thisobj.triangles.draw.createTriangles(e.pageX - thisobj.plusx + (thisobj.settings.triangleWidth / 2),e.pageY - thisobj.plusy + (thisobj.settings.triangleWidth / 2), 0.5);
+                    },
                     //create a triangle based on the current mouse position
                     createTriangles: function(x,y,opacity){
                         var triw = thisobj.settings.triangleWidth;
@@ -246,9 +251,13 @@
             });
 
             this.$elem.mousemove(function(e) {
-                thisobj.triangles.draw.createTriangles(e.pageX - thisobj.plusx,e.pageY - thisobj.plusy,1); //draw the triangle under the mouse
-                thisobj.triangles.draw.createTriangles(e.pageX - thisobj.plusx + (thisobj.settings.triangleWidth / 2),e.pageY - thisobj.plusy + (thisobj.settings.triangleWidth / 2), 0.5); //also draw a slightly random one beneath it
+                thisobj.triangles.draw.callDraw(e);
             });
+            $(thisobj.settings.surrogate).mousemove(function(e){
+                console.log('surrogate');
+                thisobj.triangles.draw.callDraw(e);
+            });
+            
 		},
 	}
 	$.fn.triangles = function(options){
