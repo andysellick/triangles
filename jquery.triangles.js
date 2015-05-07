@@ -59,8 +59,8 @@
                         thisobj.plusy = offset.top;
                         //make canvas the same size as its parent
                         var parentel = thisobj.$elem.parent();
-                        thisobj.canvas.width = parentel.width();
-                        thisobj.canvas.height = parentel.height();
+                        thisobj.canvas.width = parentel.outerWidth();
+                        thisobj.canvas.height = parentel.outerHeight();
                         
                         if(thisobj.startx == 'unset'){
                             thisobj.startx = thisobj.$elem.width() / 2;
