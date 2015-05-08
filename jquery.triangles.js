@@ -34,6 +34,7 @@
 
             this.canvas;
             this.cxt;
+            this.canvasok = 0; //used to tell if canvas was successfully initialised or not
             this.trianglestore = [];
             this.loop;
             this.plusx;
@@ -48,9 +49,7 @@
                     initialise: function(){
                         thisobj.canvas = document.getElementById(thisobj.$elem.attr('id'));
                         thisobj.triangles.general.initCanvasSize();
-                        if(thisobj.triangles.general.initCanvas()){
-                            thisobj.triangles.draw.drawLoop();
-                        }
+                        thisobj.canvasok = thisobj.triangles.general.initCanvas();
                     },
                     initCanvasSize: function(){
                         //store offset position of this canvas
@@ -73,9 +72,6 @@
                             thisobj.cxt = thisobj.canvas.getContext('2d');
                             return(1);
                         }
-                        else {
-                            //thisobj.canvas.html("Your browser does not support canvas. Sorry.");
-                        }
                     },
                     clearCanvas: function(){
                         thisobj.cxt.clearRect(0, 0, thisobj.canvas.width, thisobj.canvas.height);//clear the canvas
@@ -90,6 +86,12 @@
                         thisobj.triangles.draw.createTriangles(e.pageX - thisobj.plusx,e.pageY - thisobj.plusy,1);
                         //also draw a slightly random one beneath it
                         thisobj.triangles.draw.createTriangles(e.pageX - thisobj.plusx + (thisobj.settings.triangleWidth / 2),e.pageY - thisobj.plusy + (thisobj.settings.triangleWidth / 2), 0.5);
+                        //only call the drawloop if the canvas has been initialised correctly and it's not already been called
+                        if(thisobj.canvasok){
+                            if(!thisobj.loop){
+                                thisobj.triangles.draw.drawLoop();
+                            }
+                        }
                     },
                     //create a triangle based on the current mouse position
                     createTriangles: function(x,y,opacity){
@@ -147,7 +149,14 @@
                                 thisobj.trianglestore[i][3] -= 0.1; //thisobj.settings.fadeSpeed
                             }
                         }
-                        thisobj.loop = setTimeout(thisobj.triangles.draw.drawLoop,60); //repeat
+                        //if there are still triangles, keep looping
+                        if(thisobj.trianglestore.length){
+                            thisobj.loop = setTimeout(thisobj.triangles.draw.drawLoop,60); //repeat
+                        }
+                        //otherwise stop
+                        else {
+                            thisobj.loop = 0;
+                        }
                     },
                     //compare the proposed triangle with the others in existence to make sure it's not already there
                     checkIfExists: function(item){
@@ -241,7 +250,7 @@
                     }
                 }
                 return true;
-            }               
+            }
 
             thisobj.triangles.general.initialise();
             if('ontouchstart' in document.documentElement){
