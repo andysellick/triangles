@@ -224,6 +224,11 @@
                         if(drawit){
                             thisobj.triangles.draw.createTriangles(thisobj.startx,thisobj.starty,1);
                             thisobj.triangles.draw.createTriangles(thisobj.startx + (thisobj.settings.triangleWidth / 2),thisobj.starty + (thisobj.settings.triangleWidth / 2), 0.5); //also draw a slightly random one beneath it
+                            if(thisobj.canvasok){
+                                if(!thisobj.loop){
+                                    thisobj.triangles.draw.drawLoop();
+                                }
+                            }
                         }
                     }
                 }
