@@ -33,6 +33,8 @@
 			}, this.defaults, this.options);
 
             this.canvas;
+            this.canvasw;
+            this.canvash;
             this.cxt;
             this.canvasok = 0; //used to tell if canvas was successfully initialised or not
             this.trianglestore = [];
@@ -60,7 +62,10 @@
                         var parentel = thisobj.$elem.parent();
                         thisobj.canvas.width = parentel.outerWidth();
                         thisobj.canvas.height = parentel.outerHeight();
-                        
+                        //store canvas size
+                        thisobj.canvasw = thisobj.canvas.width;
+                        thisobj.canvash = thisobj.canvas.height;
+
                         if(thisobj.startx == 'unset'){
                             thisobj.startx = thisobj.$elem.width() / 2;
                             thisobj.starty = thisobj.$elem.height() / 2;
@@ -74,10 +79,11 @@
                         }
                     },
                     clearCanvas: function(){
-                        thisobj.cxt.clearRect(0, 0, thisobj.canvas.width, thisobj.canvas.height);//clear the canvas
-                        var w = thisobj.canvas.width;
-                        thisobj.canvas.width = 1;
-                        thisobj.canvas.width = w;
+                        thisobj.cxt.clearRect(0, 0, thisobj.canvasw, thisobj.canvash);//clear the canvas
+                        //this code slows down the plugin massively, seems to work ok without it
+                        //var w = thisobj.canvasw;
+                        //thisobj.canvas.width = 1;
+                        //thisobj.canvas.width = w;
                     }
                 },
                 draw: {
@@ -137,7 +143,7 @@
                             var curr = thisobj.trianglestore[i];
 
                             //if it's less than 0 opacity, we don't draw it, so delete it
-                            //weirdly on some mobile devices 0 opacity is draw as black, so we use the 0.1 cutoff rather than 0
+                            //weirdly on some mobile devices 0 opacity is drawn as black, so we use the 0.1 cutoff rather than 0
                             if(thisobj.trianglestore[i][3] < 0.1){
                                 thisobj.trianglestore.splice(i, 1)
                             }
@@ -236,12 +242,14 @@
             
             //http://stackoverflow.com/questions/7837456/comparing-two-arrays-in-javascript
             Array.prototype.equals = function(array) {
+                /* this code is generally useful but not here - we know we're comparing arrays, and we know they're the same length
                 // if the other array is a falsy value, return
                 if (!array)
                     return false;
                 // compare lengths - can save a lot of time
                 if (this.length != array.length)
                     return false;
+                */
                 for (var i = 0, l=this.length; i < l; i++) {
                     // Check if we have nested arrays
                     if (this[i] instanceof Array && array[i] instanceof Array) {
